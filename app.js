@@ -1,3 +1,41 @@
+//*************************************************************/
+//  The following function validates the input from the user  */
+//*************************************************************/
+function validate_name(name){
+    if (name.length<3){return 'Length needs to be at least three characters'};                   // validating length
+    if (name.length>10){return 'Length needs to be no more than 10 characters'};                 // validating length
+    if (/^[a-zA-Z]*$/.test(name)===false){return 'Only alphanumeric (upper/lowercase) allowed'}; // no number/special chars allowed 
+    return true;
+}
+
+//***********************************************************************/
+//  The following function validates the number ID input from the user  */
+//***********************************************************************/
+function validate_number(number){
+    if (number.length<3){return 'Length needs to be at least three digits'};            // validating length
+    if (number.length>5){return 'Length needs to be no more than 5 digits'};            // validating length
+    if (/^[0-9]*$/.test(number)===false){return 'Only numbers allowed in the ID'};        // no number/special chars allowed 
+    return true;
+}
+
+//*******************************************************************/
+//  The following function validates the email input from the user  */
+//*******************************************************************/
+function validate_email(email){
+    if (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)===false){return 'Invalid email notation'};
+    return true;
+}
+
+//******************************************************************************************************/
+//  The following function validates the third quesion nput from the user (office, github, or school)  */
+//******************************************************************************************************/
+function validate_third(string){
+    if (string.length<3){return 'Length needs to be at least 3 characters'};                           // validating length
+    if (string.length>5){return 'Length needs to be no more than 5 characters'};                       // validating length
+    if (/^[a-zA-Z0-9\-]*$/.test(string)===false){return 'Only alphanumberic and dashes allowed'};      // no number/special chars allowed 
+    return true;
+}
+
 // ***************************************************************************/
 // The following function will create the questions to be asked to the user  */
 // based on the team member role                                             */
@@ -17,10 +55,10 @@ function getInfo(role){
             break;
     }
 
-    let questions=[{name:'name' ,type:'input',message:`${role}'s name  ? :`},
-                    {name:'id'   ,type:'input',message:`${role}'s id    ? :`},
-                    {name:'email',type:'input',message:`${role}'s email ? :`},
-                    {name:'xyz'  ,type:'input',message:`${role}'s ${qName}? :`}]
+    let questions=[{name:'name' ,type:'input',message:`${role}'s name (Alpha)  ? :`, validate: validate_name},
+                    {name:'id'   ,type:'input',message:`${role}'s id (numeric) ? :`,validate: validate_number},
+                    {name:'email',type:'input',message:`${role}'s email ? :`,validate: validate_email},
+                    {name:'xyz'  ,type:'input',message:`${role}'s ${qName}? :`,validate: validate_third}]
 
     return questions;
 }
