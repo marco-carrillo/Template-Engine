@@ -128,7 +128,7 @@ const Manager=require('./lib/Manager');
         let divider_end='</div>';                                                     // Row ending so that we can add 3 cards per row
         let fileData=fs.readFileSync(__dirname+'/templates/team.html','utf8');        // Reading template
         let filePieces=fileData.split('{');                                           // { placeholder to add HTML for cards
-        let data=fs.writeFileSync('output/team.html',filePieces[0]+'\n');             // Writing header + Manager card
+        let data=fs.writeFileSync('output/team.html',filePieces[0]+'\n');             // Writing header 
 
         //********************************************************************/
         // Generating the file:  Writing the manager/engineer/intern cards   */
@@ -143,8 +143,8 @@ const Manager=require('./lib/Manager');
                 }
             };
 
-        data=fs.appendFileSync('output/team.html',filePieces[1]);
+        data=fs.appendFileSync('output/team.html',filePieces[1]);                      //  Writing bottom part of the template
 
-    } catch(error){console.log('Error while running the application:  ',error)};
+    } catch(error){console.log('Error while running the application:  ',error)};       //  Error handler
 
 })();
