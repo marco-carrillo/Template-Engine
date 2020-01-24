@@ -2,7 +2,7 @@
 //  The following function validates the input from the user  */
 //*************************************************************/
 function validate_name(name){
-    if (name.length<3){return 'Length needs to be at least three characters'};                   // validating length
+    if (name.length<3){return 'Length needs to be at least 3 characters'};                   // validating length
     if (name.length>10){return 'Length needs to be no more than 10 characters'};                 // validating length
     if (/^[a-zA-Z]*$/.test(name)===false){return 'Only alphanumeric (upper/lowercase) allowed'}; // no number/special chars allowed 
     return true;
@@ -12,7 +12,7 @@ function validate_name(name){
 //  The following function validates the number ID input from the user  */
 //***********************************************************************/
 function validate_number(number){
-    if (number.length<3){return 'Length needs to be at least three digits'};            // validating length
+    if (number.length<3){return 'Length needs to be at least 3 digits'};            // validating length
     if (number.length>5){return 'Length needs to be no more than 5 digits'};            // validating length
     if (/^[0-9]*$/.test(number)===false){return 'Only numbers allowed in the ID'};        // no number/special chars allowed 
     return true;
@@ -31,7 +31,7 @@ function validate_email(email){
 //******************************************************************************************************/
 function validate_third(string){
     if (string.length<3){return 'Length needs to be at least 3 characters'};                           // validating length
-    if (string.length>5){return 'Length needs to be no more than 5 characters'};                       // validating length
+    if (string.length>20){return 'Length needs to be no more than 20 characters'};                       // validating length
     if (/^[a-zA-Z0-9\-]*$/.test(string)===false){return 'Only alphanumberic and dashes allowed'};      // no number/special chars allowed 
     return true;
 }
@@ -55,10 +55,10 @@ function getInfo(role){
             break;
     }
 
-    let questions=[{name:'name' ,type:'input',message:`${role}'s name (Alpha)  ? :`, validate: validate_name},
-                    {name:'id'   ,type:'input',message:`${role}'s id (numeric) ? :`,validate: validate_number},
-                    {name:'email',type:'input',message:`${role}'s email ? :`,validate: validate_email},
-                    {name:'xyz'  ,type:'input',message:`${role}'s ${qName}? :`,validate: validate_third}]
+    let questions=[{name:'name' ,type:'input',message:`${role}'s name (Alpha only 3-10 long) ........? :`, validate: validate_name},
+                    {name:'id'   ,type:'input',message:`${role}'s id (numeric only 3-5 long)  ........? :`,validate: validate_number},
+                    {name:'email',type:'input',message:`${role}'s email (valid email address) ....... ? :`,validate: validate_email},
+                    {name:'xyz'  ,type:'input',message:`${role}'s ${qName} (Alphanumeric up 3-20 chars) ? :`,validate: validate_third}]
 
     return questions;
 }
@@ -69,7 +69,7 @@ function getInfo(role){
 //*************************************************************************/
 const inquirer=require('inquirer');
 const fs=require("fs");
-const Employee=require('./lib/Employee');
+const axios=require("axios");
 const Engineer=require('./lib/Engineer');
 const Intern=require('./lib/Intern');
 const Manager=require('./lib/Manager');
@@ -107,15 +107,15 @@ const Manager=require('./lib/Manager');
         for (let i=0;i<answers.nbrEngineers+answers.nbrInterns+1;i++){
 
             if(i===0){
-                    console.log('ENTER INFORMATION FOR THE MANAGER');
+                    console.log('\x1b[41m','ENTER INFORMATION FOR THE MANAGER','\x1b[0m');
                     information=await inquirer.prompt(getInfo('Manager'));
                     teamMembers.push(new Manager(information.name,information.id,information.email,information.xyz));
             } else if (i<=answers.nbrEngineers){
-                    console.log(`ENTER INFORMATION FOR ENGINEER ${i}`);
+                    console.log('\x1b[41m',`ENTER INFORMATION FOR ENGINEER ${i}`,'\x1b[0m');
                     information=await inquirer.prompt(getInfo('Engineer'));
                     teamMembers.push(new Engineer(information.name,information.id,information.email,information.xyz));
                 } else {
-                    console.log(`ENTER INFORMATION FOR INTERN ${i-answers.nbrEngineers}`);
+                    console.log('\x1b[41m',`ENTER INFORMATION FOR INTERN ${i-answers.nbrEngineers}`,'\x1b[0m');
                     information=await inquirer.prompt(getInfo('Intern'));
                     teamMembers.push(new Intern(information.name,information.id,information.email,information.xyz));
             }
